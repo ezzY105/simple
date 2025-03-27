@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('shipping_addresses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id');
-            $table->string('payment_method');
-            $table->decimal('amount', 8, 2);
-            $table->string('status');
-            $table->string('transaction_id')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->string('address_line');
+            $table->string('city');
+            $table->string('state');
+            $table->string('postal_code');
+            $table->string('country');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('shipping_addresses');
     }
 };

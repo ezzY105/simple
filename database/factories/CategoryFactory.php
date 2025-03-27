@@ -22,9 +22,7 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'description' => fake()->text(),
-            'created_at' => fake()->dateTime(),
-            'updated_at' => fake()->dateTime(),
+            'parent_id' => fake()->randomNumber(),
         ];
     }
 }

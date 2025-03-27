@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique(); // added unique constraint
-            $table->text('description');
+            $table->unsignedBigInteger('user_id');
+            $table->enum('status', ["pending","completed","canceled"]);
+            $table->decimal('total_price', 10, 2);
             $table->timestamps();
-            $table->softDeletes(); // enable soft deletes
         });
     }
 
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('orders');
     }
 };

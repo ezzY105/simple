@@ -4,16 +4,16 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\Order;
+use App\Models\ShippingAddress;
 
-class OrderFactory extends Factory
+class ShippingAddressFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Order::class;
+    protected $model = ShippingAddress::class;
 
     /**
      * Define the model's default state.
@@ -22,8 +22,11 @@ class OrderFactory extends Factory
     {
         return [
             'user_id' => fake()->randomNumber(),
-            'status' => fake()->randomElement(["pending","completed","canceled"]),
-            'total_price' => fake()->randomFloat(2, 0, 99999999.99),
+            'address_line' => fake()->word(),
+            'city' => fake()->city(),
+            'state' => fake()->word(),
+            'postal_code' => fake()->postcode(),
+            'country' => fake()->country(),
         ];
     }
 }

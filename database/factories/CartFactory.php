@@ -4,16 +4,16 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\User;
+use App\Models\Cart;
 
-class UserFactory extends Factory
+class CartFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = User::class;
+    protected $model = Cart::class;
 
     /**
      * Define the model's default state.
@@ -21,10 +21,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->safeEmail(),
-            'password' => fake()->password(),
-            'remember_token' => fake()->uuid(),
+            'user_id' => fake()->randomNumber(),
         ];
     }
 }
