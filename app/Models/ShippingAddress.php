@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OrderItem extends Model
+class ShippingAddress extends Model
 {
     use HasFactory;
 
@@ -15,10 +15,12 @@ class OrderItem extends Model
      * @var array
      */
     protected $fillable = [
-        'order_id',
-        'product_id',
-        'quantity',
-        'price',
+        'user_id',
+        'address_line',
+        'city',
+        'state',
+        'postal_code',
+        'country',
     ];
 
     /**
@@ -27,8 +29,6 @@ class OrderItem extends Model
      * @var array
      */
     protected $casts = [
-        'order_id' => 'integer',
-        'product_id' => 'integer',
-        'price' => 'decimal:2',
+        'user_id' => 'integer',
     ];
 }

@@ -1,27 +1,39 @@
 created:
     - database/factories/UserFactory.php
-    - database/factories/CategoryFactory.php
     - database/factories/ProductFactory.php
+    - database/factories/CategoryFactory.php
     - database/factories/OrderFactory.php
     - database/factories/OrderItemFactory.php
-    - database/factories/PaymentFactory.php
-    - database/migrations/2025_03_27_093800_create_users_table.php
-    - database/migrations/2025_03_27_093801_create_categories_table.php
-    - database/migrations/2025_03_27_093802_create_products_table.php
-    - database/migrations/2025_03_27_093803_create_orders_table.php
-    - database/migrations/2025_03_27_093804_create_order_items_table.php
-    - database/migrations/2025_03_27_093805_create_payments_table.php
+    - database/factories/ProductReviewFactory.php
+    - database/factories/CartFactory.php
+    - database/factories/CartItemFactory.php
+    - database/factories/ShippingAddressFactory.php
+    - database/migrations/2025_03_27_115502_create_users_table.php
+    - database/migrations/2025_03_27_115503_create_products_table.php
+    - database/migrations/2025_03_27_115504_create_categories_table.php
+    - database/migrations/2025_03_27_115505_create_orders_table.php
+    - database/migrations/2025_03_27_115506_create_order_items_table.php
+    - database/migrations/2025_03_27_115507_create_product_reviews_table.php
+    - database/migrations/2025_03_27_115508_create_carts_table.php
+    - database/migrations/2025_03_27_115509_create_cart_items_table.php
+    - database/migrations/2025_03_27_115510_create_shipping_addresses_table.php
     - app/Models/User.php
-    - app/Models/Category.php
     - app/Models/Product.php
+    - app/Models/Category.php
     - app/Models/Order.php
     - app/Models/OrderItem.php
-    - app/Models/Payment.php
+    - app/Models/ProductReview.php
+    - app/Models/Cart.php
+    - app/Models/CartItem.php
+    - app/Models/ShippingAddress.php
 models:
-    User: { name: string, email: 'string:unique', password: string, created_at: datetime, updated_at: datetime }
-    Product: { name: string, description: text, price: 'decimal:8,2', stock: integer, category_id: 'id:foreign:categories', created_at: datetime, updated_at: datetime }
-    Cart: { user_id: user_id, items: items }
-    Order: { user_id: 'id:foreign:users', status: 'enum[processing, shipped, delivered, cancelled]', total: 'decimal:8,2', created_at: datetime, updated_at: datetime }
-    Category: { name: 'string:unique', description: text, created_at: datetime, updated_at: datetime }
-    OrderItem: { order_id: 'id:foreign:orders', product_id: 'id:foreign:products', quantity: integer, price: 'decimal:8,2', created_at: datetime, updated_at: datetime }
+    User: { id: bigIncrements, name: string, email: 'string:unique', password: string, remember_token: 'string:nullable', timestamps: timestamps }
+    Product: { id: bigIncrements, name: string, description: text, price: 'decimal:10,2', stock: integer, category_id: unsignedBigInteger, timestamps: timestamps }
+    Cart: { id: bigIncrements, user_id: unsignedBigInteger, timestamps: timestamps }
+    Order: { id: bigIncrements, user_id: unsignedBigInteger, status: 'enum:pending,completed,canceled', total_price: 'decimal:10,2', timestamps: timestamps }
+    Category: { id: bigIncrements, name: 'string:unique', parent_id: 'unsignedBigInteger:nullable', timestamps: timestamps }
+    OrderItem: { id: bigIncrements, order_id: unsignedBigInteger, product_id: unsignedBigInteger, quantity: integer, price: 'decimal:10,2', timestamps: timestamps }
     Payment: { order_id: 'id:foreign:orders', payment_method: 'enum[credit_card, paypal, bank_transfer]', amount: 'decimal:8,2', status: 'enum[pending, completed, failed]', transaction_id: 'string:nullable', created_at: datetime, updated_at: datetime }
+    ProductReview: { id: bigIncrements, product_id: unsignedBigInteger, user_id: unsignedBigInteger, rating: integer, review: text, timestamps: timestamps }
+    CartItem: { id: bigIncrements, cart_id: unsignedBigInteger, product_id: unsignedBigInteger, quantity: integer, timestamps: timestamps }
+    ShippingAddress: { id: bigIncrements, user_id: unsignedBigInteger, address_line: string, city: string, state: string, postal_code: string, country: string, timestamps: timestamps }

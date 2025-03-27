@@ -4,8 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\User;
+
 class Order extends Model
 {
     use HasFactory;
@@ -18,7 +17,7 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'status',
-        'total',
+        'total_price',
     ];
 
     /**
@@ -27,15 +26,7 @@ class Order extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
         'user_id' => 'integer',
-        'total' => 'decimal:2',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'total_price' => 'decimal:2',
     ];
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
 }

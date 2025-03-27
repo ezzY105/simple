@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class CartItem extends Model
 {
     use HasFactory;
 
@@ -15,18 +15,18 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'cart_id',
+        'product_id',
+        'quantity',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * The attributes that should be cast to native types.
      *
      * @var array
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
+    protected $casts = [
+        'cart_id' => 'integer',
+        'product_id' => 'integer',
     ];
 }

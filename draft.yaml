@@ -1,34 +1,113 @@
 models:
-  Category:
-    # Unique category model blueprint
-    name: string:unique
-    description: text
-    created_at: datetime
-    updated_at: datetime
+    User:
+        id: bigIncrements
+        name: string
+        email: string:unique
+        password: string
+        remember_token: string:nullable
+        timestamps: 'timestamps'
 
-  Product:
-    # Product model blueprint with foreign key referencing categories
-    name: string
-    description: text
-    price: decimal:8,2
-    stock: integer
-    category_id: id:foreign:categories
-    created_at: datetime
-    updated_at: datetime
+    Product:
+        id: bigIncrements
+        name: string
+        description: text
+        price: decimal:10,2
+        stock: integer
+        category_id: unsignedBigInteger
+        timestamps: 'timestamps'
 
-  Order:
-    # Order model blueprint with foreign key referencing users
-    user_id: id:foreign:users
-    status: enum[processing, shipped, delivered, cancelled]
-    total: decimal:8,2
-    created_at: datetime
-    updated_at: datetime
+    Category:
+        id: bigIncrements
+        name: string:unique
+        parent_id: unsignedBigInteger:nullable
+        timestamps: 'timestamps'
 
+    Order:
+        id: bigIncrements
+        user_id: unsignedBigInteger
+        status: enum:pending,completed,canceled
+        total_price: decimal:10,2
+        timestamps: 'timestamps'
+
+    OrderItem:
+        id: bigIncrements
+        order_id: unsignedBigInteger
+        product_id: unsignedBigInteger
+        quantity: integer
+        price: decimal:10,2
+        timestamps: 'timestamps'
+
+    ProductReview:
+        id: bigIncrements
+        product_id: unsignedBigInteger
+        user_id: unsignedBigInteger
+        rating: integer
+        review: text
+        timestamps: 'timestamps'
+
+    Cart:
+        id: bigIncrements
+        user_id: unsignedBigInteger
+        timestamps: 'timestamps'
+
+    CartItem:
+        id: bigIncrements
+        cart_id: unsignedBigInteger
+        product_id: unsignedBigInteger
+        quantity: integer
+        timestamps: 'timestamps'
+
+    ShippingAddress:
+        id: bigIncrements
+        user_id: unsignedBigInteger
+        address_line: string
+        city: string
+        state: string
+        postal_code: string
+        country: string
+        timestamps: 'timestamps'
+
+# relationships
 relations:
-  Order:
-    hasMany: OrderItem
-    belongsTo: User
-    hasOne: Payment
-  Product:
-    belongsTo: Category
-    hasMany: OrderItem
+    User:
+        hasMany:
+            - ProductReview
+            - Order
+            - ShippingAddress
+        hasOne: Cart
+
+    Product:
+        belongsTo: Category
+        hasMany:
+            - OrderItem
+            - ProductReview
+
+    Category:
+        hasMany: Product
+        belongsTo: Category
+
+    Order:
+        belongsTo: User
+        hasMany: OrderItem
+
+    OrderItem:
+        belongsTo:
+          - Order
+          - Product
+
+    ProductReview:
+        belongsTo:
+          - User
+          - Product
+
+    Cart:
+        belongsTo: User
+        hasMany: CartItem
+
+    CartItem:
+        belongsTo:
+            - Cart
+            - Product
+
+    ShippingAddress:
+        belongsTo: User
