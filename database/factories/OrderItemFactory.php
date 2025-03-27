@@ -4,9 +4,8 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\Order;
+use App\Models\Foreign;
 use App\Models\OrderItem;
-use App\Models\Product;
 
 class OrderItemFactory extends Factory
 {
@@ -23,11 +22,12 @@ class OrderItemFactory extends Factory
     public function definition(): array
     {
         return [
-            'order_id' => Order::factory(),
-            'product_id' => Product::factory(),
+            'order_id' => Foreign::factory(),
+            'product_id' => Foreign::factory(),
             'quantity' => fake()->numberBetween(-10000, 10000),
-            'unit_price' => fake()->randomFloat(2, 0, 99999999.99),
-            'total' => fake()->randomFloat(2, 0, 99999999.99),
+            'price' => fake()->randomFloat(2, 0, 999999.99),
+            'created_at' => fake()->dateTime(),
+            'updated_at' => fake()->dateTime(),
         ];
     }
 }

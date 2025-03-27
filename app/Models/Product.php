@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Category;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -18,15 +17,11 @@ class Product extends Model
      * @var array
      */
     protected $fillable = [
-        'category_id',
         'name',
-        'slug',
         'description',
         'price',
-        'sale_price',
         'stock',
-        'sku',
-        'is_active',
+        'category_id',
     ];
 
     /**
@@ -36,19 +31,14 @@ class Product extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'category_id' => 'integer',
         'price' => 'decimal:2',
-        'sale_price' => 'decimal:2',
-        'is_active' => 'boolean',
+        'category_id' => 'integer',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
-    }
-
-    public function orderItems(): HasMany
-    {
-        return $this->hasMany(OrderItem::class);
     }
 }

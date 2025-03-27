@@ -5,7 +5,6 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\Category;
-use App\Models\CategoryParent;
 
 class CategoryFactory extends Factory
 {
@@ -23,11 +22,9 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'slug' => fake()->slug(),
             'description' => fake()->text(),
-            'parent_id' => Category::factory(),
-            'is_active' => fake()->boolean(),
-            'category_parent_id' => CategoryParent::factory(),
+            'created_at' => fake()->dateTime(),
+            'updated_at' => fake()->dateTime(),
         ];
     }
 }

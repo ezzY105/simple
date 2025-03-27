@@ -5,16 +5,16 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\Foreign;
-use App\Models\Order;
+use App\Models\Payment;
 
-class OrderFactory extends Factory
+class PaymentFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Order::class;
+    protected $model = Payment::class;
 
     /**
      * Define the model's default state.
@@ -22,9 +22,11 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => Foreign::factory(),
+            'order_id' => Foreign::factory(),
+            'payment_method' => fake()->word(),
+            'amount' => fake()->randomFloat(2, 0, 999999.99),
             'status' => fake()->word(),
-            'total' => fake()->randomFloat(2, 0, 999999.99),
+            'transaction_id' => fake()->regexify('[A-Za-z0-9]{nullable}'),
             'created_at' => fake()->dateTime(),
             'updated_at' => fake()->dateTime(),
         ];

@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Order;
+use App\Models\Product;
 
 class OrderItem extends Model
 {
@@ -19,8 +21,7 @@ class OrderItem extends Model
         'order_id',
         'product_id',
         'quantity',
-        'unit_price',
-        'total',
+        'price',
     ];
 
     /**
@@ -32,8 +33,9 @@ class OrderItem extends Model
         'id' => 'integer',
         'order_id' => 'integer',
         'product_id' => 'integer',
-        'unit_price' => 'decimal:2',
-        'total' => 'decimal:2',
+        'price' => 'decimal:2',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     public function order(): BelongsTo

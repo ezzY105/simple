@@ -11,19 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::disableForeignKeyConstraints();
-
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')->constrained();
-            $table->foreignId('product_id')->constrained();
+            $table->foreignId('order_id');
+            $table->foreignId('product_id');
             $table->integer('quantity');
-            $table->decimal('unit_price', 10, 2);
-            $table->decimal('total', 10, 2);
+            $table->decimal('price', 8, 2);
             $table->timestamps();
         });
-
-        Schema::enableForeignKeyConstraints();
     }
 
     /**

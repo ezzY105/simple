@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\User;
-class Order extends Model
+use App\Models\Order;
+
+class Payment extends Model
 {
     use HasFactory;
 
@@ -16,9 +17,11 @@ class Order extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id',
+        'order_id',
+        'payment_method',
+        'amount',
         'status',
-        'total',
+        'transaction_id',
     ];
 
     /**
@@ -28,14 +31,14 @@ class Order extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'user_id' => 'integer',
-        'total' => 'decimal:2',
+        'order_id' => 'integer',
+        'amount' => 'decimal:2',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
 
-    public function user(): BelongsTo
+    public function order(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Order::class);
     }
 }

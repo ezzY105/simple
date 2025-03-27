@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\Category;
+use App\Models\Foreign;
 use App\Models\Product;
 
 class ProductFactory extends Factory
@@ -22,15 +22,13 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'category_id' => Category::factory(),
             'name' => fake()->name(),
-            'slug' => fake()->slug(),
             'description' => fake()->text(),
-            'price' => fake()->randomFloat(2, 0, 99999999.99),
-            'sale_price' => fake()->randomFloat(2, 0, 99999999.99),
+            'price' => fake()->randomFloat(2, 0, 999999.99),
             'stock' => fake()->numberBetween(-10000, 10000),
-            'sku' => fake()->word(),
-            'is_active' => fake()->boolean(),
+            'category_id' => Foreign::factory(),
+            'created_at' => fake()->dateTime(),
+            'updated_at' => fake()->dateTime(),
         ];
     }
 }

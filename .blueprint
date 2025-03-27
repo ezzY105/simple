@@ -1,23 +1,27 @@
 created:
-    - database/factories/CustomerFactory.php
-    - database/factories/OrderFactory.php
-    - database/factories/ProductFactory.php
+    - database/factories/UserFactory.php
     - database/factories/CategoryFactory.php
+    - database/factories/ProductFactory.php
+    - database/factories/OrderFactory.php
     - database/factories/OrderItemFactory.php
-    - database/migrations/2025_03_26_122513_create_customers_table.php
-    - database/migrations/2025_03_26_122514_create_orders_table.php
-    - database/migrations/2025_03_26_122515_create_products_table.php
-    - database/migrations/2025_03_26_122516_create_categories_table.php
-    - database/migrations/2025_03_26_122517_create_order_items_table.php
-    - app/Models/Customer.php
-    - app/Models/Order.php
-    - app/Models/Product.php
+    - database/factories/PaymentFactory.php
+    - database/migrations/2025_03_27_093800_create_users_table.php
+    - database/migrations/2025_03_27_093801_create_categories_table.php
+    - database/migrations/2025_03_27_093802_create_products_table.php
+    - database/migrations/2025_03_27_093803_create_orders_table.php
+    - database/migrations/2025_03_27_093804_create_order_items_table.php
+    - database/migrations/2025_03_27_093805_create_payments_table.php
+    - app/Models/User.php
     - app/Models/Category.php
+    - app/Models/Product.php
+    - app/Models/Order.php
     - app/Models/OrderItem.php
+    - app/Models/Payment.php
 models:
-    User: { name: string, email: string, email_verified_at: 'timestamp nullable default:NULL', password: string, remember_token: 'string:100 nullable default:NULL' }
-    Customer: { name: string, email: string, phone: 'string nullable', address: 'text nullable', city: 'string nullable', state: 'string nullable', zip: 'string nullable', country: 'string nullable', status: 'boolean default:true', email_verified_at: 'timestamp nullable', password: string, remember_token: 'string:100 nullable', timestamps: timestamps, softdeletes: softDeletes, relationships: { hasMany: Order } }
-    Order: { customer_id: 'id foreign:customers', order_number: string, status: string, total: 'decimal:10,2', tax: 'decimal:10,2', shipping_cost: 'decimal:10,2', shipping_address: text, shipping_city: string, shipping_state: string, shipping_zip: string, shipping_country: string, notes: 'text nullable', timestamps: timestamps, softdeletes: softDeletes, relationships: { belongsTo: Customer, hasMany: OrderItem } }
-    Product: { category_id: 'id foreign:categories', name: string, slug: 'string unique', description: 'text nullable', price: 'decimal:10,2', sale_price: 'decimal:10,2 nullable', stock: integer, sku: 'string unique', is_active: 'boolean default:true', timestamps: timestamps, softdeletes: softDeletes, relationships: { belongsTo: Category, hasMany: OrderItem } }
-    Category: { name: string, slug: 'string unique', description: 'text nullable', parent_id: 'id foreign:categories nullable', is_active: 'boolean default:true', timestamps: timestamps, softdeletes: softDeletes, relationships: { hasMany: Product, belongsTo: 'Category parent' } }
-    OrderItem: { order_id: 'id foreign:orders', product_id: 'id foreign:products', quantity: integer, unit_price: 'decimal:10,2', total: 'decimal:10,2', timestamps: timestamps, relationships: { belongsTo: 'Order, Product' } }
+    User: { name: string, email: 'string:unique', password: string, created_at: datetime, updated_at: datetime }
+    Product: { name: string, description: text, price: 'decimal:8,2', stock: integer, category_id: 'id:foreign:categories', created_at: datetime, updated_at: datetime }
+    Cart: { user_id: user_id, items: items }
+    Order: { user_id: 'id:foreign:users', status: 'enum[processing, shipped, delivered, cancelled]', total: 'decimal:8,2', created_at: datetime, updated_at: datetime }
+    Category: { name: 'string:unique', description: text, created_at: datetime, updated_at: datetime }
+    OrderItem: { order_id: 'id:foreign:orders', product_id: 'id:foreign:products', quantity: integer, price: 'decimal:8,2', created_at: datetime, updated_at: datetime }
+    Payment: { order_id: 'id:foreign:orders', payment_method: 'enum[credit_card, paypal, bank_transfer]', amount: 'decimal:8,2', status: 'enum[pending, completed, failed]', transaction_id: 'string:nullable', created_at: datetime, updated_at: datetime }

@@ -32,12 +32,10 @@ class OrderItemResource extends Resource
                 Forms\Components\TextInput::make('quantity')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('unit_price')
+                Forms\Components\TextInput::make('price')
                     ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('total')
-                    ->required()
-                    ->numeric(),
+                    ->numeric()
+                    ->prefix('$'),
             ]);
     }
 
@@ -54,11 +52,8 @@ class OrderItemResource extends Resource
                 Tables\Columns\TextColumn::make('quantity')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('unit_price')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('total')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('price')
+                    ->money()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

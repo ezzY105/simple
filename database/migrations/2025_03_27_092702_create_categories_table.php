@@ -11,21 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::disableForeignKeyConstraints();
-
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('slug')->unique();
-            $table->text('description')->nullable();
-            $table->foreignId('parent_id')->nullable()->constrained('categories');
-            $table->boolean('is_active')->default(true);
-            $table->foreignId('category_parent_id');
+            $table->string('name')->unique(); // added unique constraint
+            $table->text('description');
             $table->timestamps();
-            $table->softDeletes();
+            $table->softDeletes(); // enable soft deletes
         });
-
-        Schema::enableForeignKeyConstraints();
     }
 
     /**
