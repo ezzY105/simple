@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\PaymentResource\Pages;
+namespace App\Filament\Resources\CartitemResource\Pages;
 
-use App\Filament\Resources\PaymentResource;
+use App\Filament\Resources\CartitemResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-class ListPayments extends ListRecords
+class ListCartitems extends ListRecords
 {
-    protected static string $resource = PaymentResource::class;
+    protected static string $resource = CartitemResource::class;
 
     protected function getHeaderActions(): array
     {

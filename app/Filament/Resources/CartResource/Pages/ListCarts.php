@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\CategoryResource\Pages;
+namespace App\Filament\Resources\CartResource\Pages;
 
-use App\Filament\Resources\CategoryResource;
+use App\Filament\Resources\CartResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-class ListCategories extends ListRecords
+class ListCarts extends ListRecords
 {
-    protected static string $resource = CategoryResource::class;
+    protected static string $resource = CartResource::class;
 
     protected function getHeaderActions(): array
     {
